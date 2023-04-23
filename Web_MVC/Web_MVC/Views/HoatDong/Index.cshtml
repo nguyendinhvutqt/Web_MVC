@@ -1,0 +1,20 @@
+﻿
+@model Web_MVC.Models.Activity
+@{
+    ViewBag.Title = "Hoạt động";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section  breadcrumb{
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Home/Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Hoạt động</li>
+        </ol>
+    </div>
+}
+
+<h2 class="mb-3">@Model.Title</h2>
+<h5>@Html.Raw(HttpUtility.HtmlDecode(Model.Description.ToString()))</h5>
+
+

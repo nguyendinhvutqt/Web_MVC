@@ -1,0 +1,87 @@
+﻿@model Web_MVC.Models.Product
+
+@{
+    ViewBag.Title = "Sua";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Web_MVC.Models.Project_WebEntities db = new Web_MVC.Models.Project_WebEntities();
+}
+
+<div class="container">
+    <div class="com-xl-12">
+        <h2>Sửa sản phẩm</h2>
+    </div>
+    <div class="com-xl-12">
+        @using (Html.BeginForm("Sua", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        <textarea type="Text" id="inputNoiDung" name="Description" class="form-control">@Html.Raw(Model.Description)</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        <input type="file" name="file" accept=".jpg,.jpeg,.png" />
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ProductsCatalogID, "ProductsCatalogID", htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @{
+                            var list = db.ProductsCatalogs.ToList();
+                            List<SelectListItem> options = new List<SelectListItem>();
+                            foreach (var item in list)
+                            {
+                                options.Add(new SelectListItem { Text = item.Name, Value = item.ID.ToString(), Selected = item.ID == Model.ProductsCatalogID });
+                            }
+                        }
+                        @Html.DropDownList("ProductsCatalogID", options, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ProductsCatalogID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-xl-12 mt-3">
+                        <button type="submit" class="btn btn-success">Lưu</button>
+                        @Html.ActionLink("Quay lại", "Index")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section DesProduct {
+    <script>
+        CKEDITOR.replace('inputNoiDung', {
+            htmlEncodeOutput: true
+        })
+    </script>
+}

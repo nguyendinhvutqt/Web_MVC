@@ -1,0 +1,86 @@
+﻿@model Web_MVC.Models.News
+
+@{
+    ViewBag.Title = "Sua";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Web_MVC.Models.Project_WebEntities db = new Web_MVC.Models.Project_WebEntities();
+}
+
+<div class="container">
+    <div class="com-xl-12">
+        <h2>Chi tiết tin tức</h2>
+    </div>
+    <div class="com-xl-12">
+        @using (Html.BeginForm("Sua", "TinTuc", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Contents, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        <textarea type="Text" id="Contents" name="Contents" class="form-control">@Html.Raw(Model.Contents)</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        <input type="file" name="file" accept=".jpg,.jpeg,.png" />
+                        @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NewsCatalogID, "NewsCatalogID", htmlAttributes: new { @class = "control-label col-md-2 mt-3" })
+                    <div class="col-xl-12">
+                        @{ 
+                            List<SelectListItem> options = new List<SelectListItem>();
+                            var list = db.NewsCatalogs.ToList();
+                            foreach (var item in list)
+                            {
+                                options.Add(new SelectListItem { Text = item.Name, Value = item.ID.ToString(), Selected = item.ID == Model.NewsCatalogID });
+                            }
+                        }
+                        @Html.DropDownList("NewsCatalogID", options, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NewsCatalogID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10 mt-3">
+                        <button type="submit" class="btn btn-success" >Lưu</button>
+                        @Html.ActionLink("Quay lại", "Index")
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section News {
+    <script>
+        CKEDITOR.replace('Contents', {
+            htmlEncodeOutput: true
+        })
+    </script>
+}

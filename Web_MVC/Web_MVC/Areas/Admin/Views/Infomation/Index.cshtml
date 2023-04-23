@@ -1,0 +1,100 @@
+﻿@model Web_MVC.Models.Infomation
+
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <div class="com-xl-12">
+        <h2>Giới thiệu công ty</h2>
+    </div>
+    <div class="com-xl-12 mt-3">
+        @using (Html.BeginForm("Index", "Infomation", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="pt-2 pb-2">
+                <div class="col-md-12">
+                    <h4>Thông tin liên hệ</h4>
+                </div>
+                <div class="d-flex">
+                    <div class="form-group col-sm-6">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="p-2">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-6">
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="p-2">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="p-2">
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-xl-12">
+                    <textarea type="Text" id="Info" name="Info" class="form-control">@Html.Raw(Model.Info)</textarea>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MainInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-xl-12">
+                    <textarea type="Text" id="MainInfo" name="MainInfo" class="form-control">@Html.Raw(Model.MainInfo)</textarea>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SubInfo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-xl-12">
+                    <textarea type="Text" id="SubInfo" name="SubInfo" class="form-control">@Html.Raw(Model.SubInfo)</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 mt-3">
+                    <button type="submit" class="btn btn-success" >Lưu</button>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>
+
+@section Infomation {
+    <script>
+        CKEDITOR.replace('Info', {
+            htmlEncodeOutput: true
+        })
+        CKEDITOR.replace('MainInfo', {
+            htmlEncodeOutput: true
+        })
+        CKEDITOR.replace('SubInfo', {
+            htmlEncodeOutput: true
+        })
+    </script>
+}

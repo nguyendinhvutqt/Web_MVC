@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Web_MVC.Models.News>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <div class="com-xl-12">
+        <h2>Danh sách tin tức</h2>
+        <a class="btn btn-success mt-2" href="~/Admin/TinTuc/ThemMoi">Thêm mới</a>
+    </div>
+    <div class="com-xl-12 mt-3">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Image)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NewsCatalog.Name)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <img src="@Url.Content(item.Image)" alt="Avatar" style="width: 60px; height: 60px">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewsCatalog.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Chi Tiết", "Sua", new { id = item.ID }) |
+                        @Html.ActionLink("Xoá", "Xoa", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="pagination-container">
+        @Html.Partial("~/Areas/Admin/Views/Shared/Pagination.cshtml", new { currentPage = ViewBag.CurrentPage, totalPages = ViewBag.TotalPages })
+    </div>
+</div>
+

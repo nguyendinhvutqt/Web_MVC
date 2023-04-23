@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Web_MVC.Models.Product>
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Web_MVC.Models.Project_WebEntities db = new Web_MVC.Models.Project_WebEntities();
+}
+@section  breadcrumb{
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Home/Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Sản Phẩm</li>
+        </ol>
+        <h2>DANH SÁCH SẢN PHẨM</h2>
+    </div>
+    }
+<div class="row">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <div class="col-xl-4 mb-2 col-sm-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-xl-12 text-center" style="height: 150px;">
+                                        <img style="object-fit: contain; max-width: 100% " src="@Url.Content(item.Image)" class="h-100" alt="Alternate Text" />
+                                    </div>
+                                    <h5 class="card-title mt-2">@item.Name</h5>
+                                    <p class="card-text text-truncate">Code: @item.Code</p>
+                                    <a href="@Url.Action("ChiTiet", "DanhSachSanPham", new { id = item.ID })" class="btn btn-primary">Xem</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        

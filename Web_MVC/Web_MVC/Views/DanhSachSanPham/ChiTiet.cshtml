@@ -1,0 +1,37 @@
+﻿@model Web_MVC.Models.Product
+
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Web_MVC.Models.Project_WebEntities db = new Web_MVC.Models.Project_WebEntities();
+}
+
+@section  breadcrumb{
+    
+        <div aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Home/Index">Home</a></li>
+                <li class="breadcrumb-item"><a href="~/DanhSachSanPham/Index">Sản Phẩm</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+            </ol>
+        </div>
+}
+
+                <div class="d-flex">
+                    <div class="col-xl-6" style="width: 350px">
+                        <img class="col-xl-12" src="@Url.Content(Model.Image)" alt="img" />
+                    </div>
+                    <div class="col-xl-6">
+                        <p>Tên sản phẩm: @Model.Name</p>
+                        <p>Mã Code: @Model.Code</p>
+                        <a href="#" class="btn btn-primary"><i class="fa fa-phone" aria-hidden="true"></i> Liên hệ ngay</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card p-4">
+                    <h2>Thông tin sản phẩm</h2>
+                    <div class="mt-4">
+                        @Html.Raw(HttpUtility.HtmlDecode(Model.Description.ToString()))
+                    </div>
+                </div>
+            

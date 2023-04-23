@@ -1,0 +1,20 @@
+﻿@model Web_MVC.Models.News
+@{
+    ViewBag.Title = "Chi tiêt tin tức";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Web_MVC.Models.Project_WebEntities db = new Web_MVC.Models.Project_WebEntities();
+}
+@section  breadcrumb{
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="~/Home/Index">Home</a></li>
+            <li class="breadcrumb-item"><a href="~/DanhSachTinTuc/Index">Tin tức</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+        </ol>
+    </div>
+    }
+
+        <h2>@Model.Title</h2>
+        <h5>@Html.Raw(HttpUtility.HtmlDecode(Model.Description.ToString()))</h5>
+        <div>@Html.Raw(HttpUtility.HtmlDecode(Model.Contents.ToString()))</div>
+    
